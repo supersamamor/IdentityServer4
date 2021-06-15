@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MvcClient.Constants;
 using MvcClient.Models;
 using Newtonsoft.Json.Linq;
 using System;
@@ -38,6 +39,21 @@ namespace MvcClient.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        [Authorize(Policy = AuthorizationConsts.Module1Policy)]
+        public IActionResult Module1()
+        {
+            return View();
+        }
+        [Authorize(Policy = AuthorizationConsts.Module2Policy)]
+        public IActionResult Module2()
+        {
+            return View();
+        }
+        [Authorize(Policy = AuthorizationConsts.Module3Policy)]
+        public IActionResult Module3()
+        {
+            return View();
         }
     }
 }

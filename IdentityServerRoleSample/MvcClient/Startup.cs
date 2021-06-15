@@ -1,3 +1,4 @@
+using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -8,7 +9,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using MvcClient.Configuration;
 using MvcClient.Constants;
-using MvcClient.MiddleWares;
 
 namespace MvcClient
 {
@@ -26,6 +26,7 @@ namespace MvcClient
             services.AddHttpContextAccessor();      
             var adminConfiguration = new AdminConfiguration();
             Configuration.GetSection(nameof(AdminConfiguration)).Bind(adminConfiguration);
+
             var authenticationBuilder = services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -64,8 +65,25 @@ namespace MvcClient
                             NameClaimType = adminConfiguration.TokenValidationClaimName,
                             RoleClaimType = adminConfiguration.TokenValidationClaimRole
                         };                        
-                    });        
-            services.AddSingleton<IClaimsTransformation, ClaimsTransformer>(); 
+                    });
+
+            services.AddAuthorization(options =>
+            {              
+                options.AddPolicy(AuthorizationConsts.Module1Policy,
+                    policy =>  policy.RequireAssertion(context => context.User.HasClaim(c =>((c.Type == "Permissions" && c.Value == "Module1")))));
+
+                options.AddPolicy(AuthorizationConsts.Module2Policy,
+                  policy => policy.RequireAssertion(context => context.User.HasClaim(c => ((c.Type == "Permissions" && c.Value == "Module2")))));
+
+                options.AddPolicy(AuthorizationConsts.Module3Policy,
+                  policy => policy.RequireAssertion(context => context.User.HasClaim(c => ((c.Type == "Permissions" && c.Value == "Module3")))));
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/AccessDenied";
+            });
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
