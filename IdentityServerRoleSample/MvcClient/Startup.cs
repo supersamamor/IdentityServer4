@@ -1,38 +1,71 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using MvcClient.Configuration;
+using MvcClient.Constants;
+using MvcClient.MiddleWares;
 
 namespace MvcClient
 {
     public class Startup
     {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
-            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
-
-            services.AddAuthentication(options =>
+            services.AddHttpContextAccessor();      
+            var adminConfiguration = new AdminConfiguration();
+            Configuration.GetSection(nameof(AdminConfiguration)).Bind(adminConfiguration);
+            var authenticationBuilder = services.AddAuthentication(options =>
             {
-                options.DefaultScheme = "Cookies";
-                options.DefaultChallengeScheme = "oidc";
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = AuthenticationConsts.OidcAuthenticationScheme;
+
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultForbidScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             })
-            .AddCookie("Cookies")
-            .AddOpenIdConnect("oidc", options =>
-            {
-                options.Authority = "https://localhost:44310";
-                options.ClientId = "mvc_client";
-                options.ClientSecret = "047ebc90-61ef-9f81-da1e-7375d0e8836f";
-                options.ResponseType = "code";
-                options.Scope.Add("openid");
-                options.Scope.Add("profile");
-                options.Scope.Add("email");
-                options.Scope.Add("roles");
-                options.Scope.Add("skoruba_identity_admin_api");  
-                options.SaveTokens = true;
-            });
+                    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+                        options =>
+                        {
+                            options.Cookie.Name = adminConfiguration.IdentityAdminCookieName;
+                        })
+                    .AddOpenIdConnect(AuthenticationConsts.OidcAuthenticationScheme, options =>
+                    {
+                        options.Authority = adminConfiguration.IdentityServerBaseUrl;
+                        options.RequireHttpsMetadata = adminConfiguration.RequireHttpsMetadata;
+                        options.ClientId = adminConfiguration.ClientId;
+                        options.ClientSecret = adminConfiguration.ClientSecret;
+                        options.ResponseType = adminConfiguration.OidcResponseType;
+                        options.Scope.Clear();
+                        foreach (var scope in adminConfiguration.Scopes)
+                        {
+                            options.Scope.Add(scope);
+                        }
+                        options.ClaimActions.MapJsonKey(adminConfiguration.TokenValidationClaimRole, adminConfiguration.TokenValidationClaimRole, adminConfiguration.TokenValidationClaimRole);
+                        options.ClaimActions.MapJsonKey("Permissions", "Permissions", "Permissions");                       
+                        options.SaveTokens = true;
+
+                        options.GetClaimsFromUserInfoEndpoint = true;
+
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            NameClaimType = adminConfiguration.TokenValidationClaimName,
+                            RoleClaimType = adminConfiguration.TokenValidationClaimRole
+                        };                        
+                    });        
+            services.AddSingleton<IClaimsTransformation, ClaimsTransformer>(); 
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

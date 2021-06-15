@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MvcClient.Models;
@@ -22,32 +23,12 @@ namespace MvcClient.Controllers
             _logger = logger;
         }
 
+      
         public IActionResult Index()
         {
             return View();
-        }
-
-        public async Task<IActionResult> CallApi()
-        {
-            var accessToken = await HttpContext.GetTokenAsync("access_token");
-
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            try
-            {
-                var content = await client.GetStringAsync("https://localhost:44366/identity");
-
-                ViewBag.Json = JArray.Parse(content).ToString();
-               
-            }
-            catch(Exception ex) 
-            {
-                var test = ex;
-                var test2 = 1;
-            }
-
-            return View("json");
-        }
+        }     
+       
         public IActionResult Logout()
         {
             return SignOut("Cookies", "oidc");
