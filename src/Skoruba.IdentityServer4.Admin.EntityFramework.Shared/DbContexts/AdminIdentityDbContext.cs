@@ -29,6 +29,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts
             builder.Entity<UserIdentityUserLogin>().ToTable(TableConsts.IdentityUserLogins);
             builder.Entity<UserIdentityUserClaim>().ToTable(TableConsts.IdentityUserClaims);
             builder.Entity<UserIdentityUserToken>().ToTable(TableConsts.IdentityUserTokens);
+            builder.Entity<Application>().ToTable(TableConsts.IdentityApplications);
         }
     }
 }

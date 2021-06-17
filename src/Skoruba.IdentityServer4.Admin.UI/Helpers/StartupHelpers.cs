@@ -46,6 +46,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.MySql;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.PostgreSQL;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Configuration.SqlServer;
 using Skoruba.IdentityServer4.Shared.Configuration.Authentication;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.UI.Helpers
 {
@@ -229,7 +230,7 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
         /// <param name="services"></param>
         public static void AddMvcWithLocalization<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>
+            TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto, TApplication, TApplicationsDto>
             (this IServiceCollection services, CultureConfiguration cultureConfiguration)
             where TUserDto : UserDto<TKey>, new()
             where TRoleDto : RoleDto<TKey>, new()
@@ -251,6 +252,8 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
             where TRoleClaimsDto : RoleClaimsDto<TRoleClaimDto, TKey>
             where TUserClaimDto : UserClaimDto<TKey>
             where TRoleClaimDto : RoleClaimDto<TKey>
+            where TApplication : IApplication
+            where TApplicationsDto : ApplicationsDto
         {
             services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
 
@@ -276,7 +279,7 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
                 {
                     m.FeatureProviders.Add(new GenericTypeControllerFeatureProvider<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                         TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>());
+                        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto, TApplication, TApplicationsDto>());
                 });
 
             services.Configure<RequestLocalizationOptions>(

@@ -9,7 +9,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfac
     public interface IIdentityService<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole,
         TUserLogin, TRoleClaim, TUserToken,
         TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>
+        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto, TApplications, TApplicationsDto>
         where TUserDto : UserDto<TKey>
         where TUser : IdentityUser<TKey>
         where TRole : IdentityRole<TKey>
@@ -100,5 +100,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfac
         Task<IdentityResult> DeleteRoleClaimAsync(TRoleClaimsDto role);
 
         Task<IdentityResult> DeleteRoleAsync(TRoleDto role);
+        Task<TRolesDto> GetApplicationsAsync(string search, int page = 1, int pageSize = 10);
     }
 }

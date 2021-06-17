@@ -20,10 +20,10 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
     public class IdentityService<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole,
         TUserLogin, TRoleClaim, TUserToken,
         TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto> : IIdentityService<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole,
+        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto, TApplications, TApplicationsDto> : IIdentityService<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole,
         TUserLogin, TRoleClaim, TUserToken,
         TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>
+        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto, TApplications, TApplicationsDto>
         where TUserDto : UserDto<TKey>
         where TRoleDto : RoleDto<TKey>
         where TUser : IdentityUser<TKey>
@@ -494,6 +494,16 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             await AuditEventLogger.LogEventAsync(new RoleDeletedEvent<TRoleDto>(role));
 
             return HandleIdentityError(identityResult, IdentityServiceResources.RoleDeleteFailed().Description, IdentityServiceResources.IdentityErrorKey().Description, role);
+        }
+
+        public virtual async Task<TRolesDto> GetApplicationsAsync(string search, int page = 1, int pageSize = 10)
+        {
+            //PagedList<TApplications> pagedList = await IdentityRepository.GetApplicationsAsync(search, page, pageSize);
+            //var applicationsDto = Mapper.Map<TApplicationsDto>(pagedList);
+
+            //await AuditEventLogger.LogEventAsync(new RolesRequestedEvent<TApplicationsDto>(applicationsDto));
+
+            return null;
         }
     }
 }
