@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Models;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers
 {
@@ -17,7 +19,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers
         TUserLogin, TRoleClaim, TUserToken,
         TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
         TUserProviderDto, TUserProvidersDto, TRoleClaimsDto,
-        TUserClaimDto, TRoleClaimDto>
+        TUserClaimDto, TRoleClaimDto, TApplicationsDto>
         : Profile
         where TUserDto : UserDto<TKey>
         where TRoleDto : RoleDto<TKey>
@@ -38,6 +40,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers
         where TRoleClaimsDto : RoleClaimsDto<TRoleClaimDto, TKey>
         where TUserClaimDto : UserClaimDto<TKey>
         where TRoleClaimDto : RoleClaimDto<TKey>
+        where TApplicationsDto : ApplicationsDto
     {
         public IdentityMapperProfile()
         {
@@ -110,6 +113,14 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers
             // model to entity
             CreateMap<TUserDto, TUser>(MemberList.Source)
                 .ForMember(dest => dest.Id, opt => opt.Condition(srs => srs.Id != null)); ;
+                       
+     
+            CreateMap<PagedList<IApplication>, TApplicationsDto>(MemberList.Destination)
+            .ForMember(x => x.Applications,
+                opt => opt.MapFrom(src => src.Data));
+
+            CreateMap<IApplication, ApplicationDto>().ReverseMap();
+            CreateMap<Application, ApplicationDto>().ReverseMap();
         }
     }
 }

@@ -258,5 +258,12 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources {
                 return ResourceManager.GetString("UserUpdateFailed", resourceCulture);
             }
         }
+        public static string ApplicationDoesNotExist
+        {
+            get
+            {
+                return ResourceManager.GetString("ApplicationDoesNotExist", resourceCulture);
+            }
+        }
     }
 }

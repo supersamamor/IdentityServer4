@@ -74,6 +74,7 @@ namespace Microsoft.Extensions.DependencyInjection
             where TRoleClaimsDto : RoleClaimsDto<TRoleClaimDto, TKey>
             where TUserClaimDto : UserClaimDto<TKey>
             where TRoleClaimDto : RoleClaimDto<TKey>
+            where TApplicationsDto : ApplicationsDto
         {
 
             return services.AddAdminAspNetIdentityServices<TAdminDbContext, TAdminDbContext, TUserDto, TRoleDto,
@@ -108,6 +109,7 @@ namespace Microsoft.Extensions.DependencyInjection
             where TRoleClaimsDto : RoleClaimsDto<TRoleClaimDto, TKey>
             where TUserClaimDto : UserClaimDto<TKey>
             where TRoleClaimDto : RoleClaimDto<TKey>
+            where TApplicationsDto : ApplicationsDto
         {
             return AddAdminAspNetIdentityServices<TIdentityDbContext, TPersistedGrantDbContext, TUserDto,
                 TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin,
@@ -143,6 +145,7 @@ namespace Microsoft.Extensions.DependencyInjection
             where TRoleClaimsDto : RoleClaimsDto<TRoleClaimDto, TKey>
             where TUserClaimDto : UserClaimDto<TKey>
             where TRoleClaimDto : RoleClaimDto<TKey>
+            where TApplicationsDto : ApplicationsDto
         {
             //Repositories
             services.AddTransient<IIdentityRepository<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>, IdentityRepository<TIdentityDbContext, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>>();
@@ -167,7 +170,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     TUserRole, TUserLogin, TRoleClaim, TUserToken,
                     TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
                     TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto,
-                    TRoleClaimDto>()
+                    TRoleClaimDto, TApplicationsDto>()
                 .AddProfilesType(profileTypes);
 
             return services;

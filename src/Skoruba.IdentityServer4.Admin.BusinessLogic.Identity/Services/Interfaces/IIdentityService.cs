@@ -100,6 +100,9 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfac
         Task<IdentityResult> DeleteRoleClaimAsync(TRoleClaimsDto role);
 
         Task<IdentityResult> DeleteRoleAsync(TRoleDto role);
-        Task<TRolesDto> GetApplicationsAsync(string search, int page = 1, int pageSize = 10);
+        Task<TApplicationsDto> GetApplicationsAsync(string search, int page = 1, int pageSize = 10);
+        Task<ApplicationDto> GetApplicationAsync(int applicationId);
+        Task<int> CreateApplicationAsync(ApplicationDto application);
+        Task<int> UpdateApplicationAsync(ApplicationDto application);
     }
 }

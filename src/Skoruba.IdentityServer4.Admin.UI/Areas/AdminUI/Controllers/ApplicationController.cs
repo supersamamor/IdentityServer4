@@ -63,13 +63,48 @@ namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(int? page, string search)
+        public async Task<IActionResult> Applications(int? page, string search)
         {
             ViewBag.Search = search;
             var apllications = await _identityService.GetApplicationsAsync(search, page ?? 1);
-            return View();
+            return View(apllications);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Application(int id)
+        {
+            if (id == 0)
+            {
+                return View(new ApplicationDto());
+            }
+
+            var application = await _identityService.GetApplicationAsync(id);
+
+            return View(application);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Application(ApplicationDto application)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(application);
+            }
 
+            int applicationId;
+
+            if (application.Id == 0)
+            {
+                applicationId = await _identityService.CreateApplicationAsync(application);    
+            }
+            else
+            {
+                applicationId = await _identityService.UpdateApplicationAsync(application);              
+            }
+
+            SuccessNotification(string.Format(_localizer["SuccessCreateApplication"], application.Name), _localizer["SuccessTitle"]);
+
+            return RedirectToAction(nameof(application), new { Id = applicationId });
+        }
     }
 }

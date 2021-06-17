@@ -201,5 +201,13 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources
                 Description = IdentityServiceResource.IdentityErrorKey
             };
         }
+        public virtual ResourceMessage ApplicationDoesNotExist()
+        {
+            return new ResourceMessage()
+            {
+                Code = nameof(ApplicationDoesNotExist),
+                Description = IdentityServiceResource.ApplicationDoesNotExist
+            };
+        }
     }
 }

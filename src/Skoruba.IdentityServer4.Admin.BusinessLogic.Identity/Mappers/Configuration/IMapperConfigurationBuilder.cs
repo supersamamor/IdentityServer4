@@ -15,7 +15,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers.Configura
             TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
             TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto,
-            TUserClaimDto, TRoleClaimDto>()
+            TUserClaimDto, TRoleClaimDto, TApplicationsDto>()
             where TUserDto : UserDto<TKey>
             where TRoleDto : RoleDto<TKey>
             where TUser : IdentityUser<TKey>
@@ -35,6 +35,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers.Configura
             where TUserChangePasswordDto : UserChangePasswordDto<TKey>
             where TRoleClaimsDto : RoleClaimsDto<TRoleClaimDto, TKey>
             where TUserClaimDto : UserClaimDto<TKey>
-            where TRoleClaimDto : RoleClaimDto<TKey>;
+            where TRoleClaimDto : RoleClaimDto<TKey>
+            where TApplicationsDto : ApplicationsDto;
     }
 }

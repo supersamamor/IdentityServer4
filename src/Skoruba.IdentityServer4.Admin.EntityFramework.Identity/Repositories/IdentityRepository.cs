@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Enums;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Extensions;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Models;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
@@ -400,5 +401,44 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
         {
             return await DbContext.SaveChangesAsync();
         }
+        public virtual async Task<PagedList<IApplication>> GetApplicationsAsync(string search, int page = 1, int pageSize = 10)
+        {      
+            var pagedList = new PagedList<IApplication>();
+            var applications = DbContext.Set<Application>().WhereIf(!string.IsNullOrEmpty(search), t => t.Name.Contains(search));
+
+            var pagedApplications = await applications.PageBy(x => x.Id, page, pageSize)
+                .ToListAsync();
+
+            pagedList.Data.AddRange(pagedApplications);
+            pagedList.TotalCount = await applications.CountAsync();
+            pagedList.PageSize = pageSize;
+
+            return pagedList;
+        }
+        public virtual async Task<IApplication> GetApplicationAsync(int applicationId)
+        {   
+            return await DbContext.Set<Application>().Where(l=>l.Id == applicationId).AsNoTracking().FirstOrDefaultAsync();     
+        }
+        public virtual async Task<int> CreateApplicationAsync(Application application)
+        {
+            DbContext.Set<Application>().Add(application);
+            await AutoSaveChangesAsync();
+            return application.Id;         
+        }
+     
+        public virtual async Task UpdateApplicationAsync(Application application)
+        {
+            //Remove old relations
+            //await RemoveApplicationRelationsAsync(application);
+            //Update with new data
+            DbContext.Set<Application>().Update(application);
+            await AutoSaveChangesAsync();
+        }
+        private async Task RemoveApplicationRelationsAsync(Application application)
+        {
+            //Remove old allowed scopes
+            //var clientScopes = await DbContext.ClientScopes.Where(x => x.Client.Id == client.Id).ToListAsync();
+            //DbContext.ClientScopes.RemoveRange(clientScopes);
+        }  
     }
 }

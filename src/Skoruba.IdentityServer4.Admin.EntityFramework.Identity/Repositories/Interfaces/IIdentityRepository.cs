@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Models;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.Interfaces
 {
@@ -83,7 +84,10 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.In
         Task<IdentityResult> DeleteRoleAsync(TRole role);
 
         bool AutoSaveChanges { get; set; }
-
         Task<int> SaveAllChangesAsync();
+        Task<PagedList<IApplication>> GetApplicationsAsync(string search, int page = 1, int pageSize = 10);
+        Task<IApplication> GetApplicationAsync(int applicationId);
+        Task<int> CreateApplicationAsync(Application application);
+        Task UpdateApplicationAsync(Application application);
     }
 }

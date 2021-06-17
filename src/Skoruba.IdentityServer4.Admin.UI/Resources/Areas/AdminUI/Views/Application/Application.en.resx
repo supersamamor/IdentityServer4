@@ -117,73 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ApplicationDoesNotExist" xml:space="preserve">
-    <value />
+  <data name="ActionSaveApplication" xml:space="preserve">
+    <value>Save Application</value>
   </data>
-  <data name="IdentityErrorKey" xml:space="preserve">
-    <value>Error</value>
+  <data name="ApplicationName" xml:space="preserve">
+    <value>Application Name</value>
   </data>
-  <data name="RoleClaimDoesNotExist" xml:space="preserve">
-    <value>Role claim with id {0} doesn't exist</value>
+  <data name="NavigationApplications" xml:space="preserve">
+    <value>Applications</value>
   </data>
-  <data name="RoleClaimsCreateFailed" xml:space="preserve">
-    <value>Role Claims creating failed</value>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Applications</value>
   </data>
-  <data name="RoleClaimsDeleteFailed" xml:space="preserve">
-    <value>Role Claims deleting failed</value>
+  <data name="TableButtonEdit" xml:space="preserve">
+    <value>Edit</value>
   </data>
-  <data name="RoleClaimsUpdateFailed" xml:space="preserve">
-    <value>Role Claims updating failed</value>
+  <data name="TableName" xml:space="preserve">
+    <value>Name</value>
   </data>
-  <data name="RoleCreateFailed" xml:space="preserve">
-    <value>Role creating failed</value>
-  </data>
-  <data name="RoleDeleteFailed" xml:space="preserve">
-    <value>Role deleting failed</value>
-  </data>
-  <data name="RoleDoesNotExist" xml:space="preserve">
-    <value>Role with id {0} doesn't exist</value>
-  </data>
-  <data name="RoleUpdateFailed" xml:space="preserve">
-    <value>Role updating failed</value>
-  </data>
-  <data name="UserChangePasswordFailed" xml:space="preserve">
-    <value>User Change Password failed</value>
-  </data>
-  <data name="UserClaimDoesNotExist" xml:space="preserve">
-    <value>User claim with id {0} doesn't exist</value>
-  </data>
-  <data name="UserClaimsCreateFailed" xml:space="preserve">
-    <value>User Claims creating failed</value>
-  </data>
-  <data name="UserClaimsDeleteFailed" xml:space="preserve">
-    <value>User Claims deleting failed</value>
-  </data>
-  <data name="UserClaimsUpdateFailed" xml:space="preserve">
-    <value>User Claims updating failed</value>
-  </data>
-  <data name="UserCreateFailed" xml:space="preserve">
-    <value>User creating failed</value>
-  </data>
-  <data name="UserDeleteFailed" xml:space="preserve">
-    <value>User deleting failed</value>
-  </data>
-  <data name="UserDoesNotExist" xml:space="preserve">
-    <value>User with id {0} doesn't exist</value>
-  </data>
-  <data name="UserProviderDeleteFailed" xml:space="preserve">
-    <value>User Provider deleting failed</value>
-  </data>
-  <data name="UserProviderDoesNotExist" xml:space="preserve">
-    <value>User provider with id {0} doesn't exist</value>
-  </data>
-  <data name="UserRoleCreateFailed" xml:space="preserve">
-    <value>User Role creating failed</value>
-  </data>
-  <data name="UserRoleDeleteFailed" xml:space="preserve">
-    <value>User Role deleting failed</value>
-  </data>
-  <data name="UserUpdateFailed" xml:space="preserve">
-    <value>User updating failed</value>
+  <data name="Title" xml:space="preserve">
+    <value>Application</value>
   </data>
 </root>

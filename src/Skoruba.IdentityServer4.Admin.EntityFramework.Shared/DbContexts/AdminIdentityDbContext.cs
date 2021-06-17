@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Models;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Constants;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 
@@ -18,7 +20,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts
 
             ConfigureIdentityContext(builder);
         }
-
+        public DbSet<Application> Applications { get; set; }
         private void ConfigureIdentityContext(ModelBuilder builder)
         {
             builder.Entity<UserIdentityRole>().ToTable(TableConsts.IdentityRoles);

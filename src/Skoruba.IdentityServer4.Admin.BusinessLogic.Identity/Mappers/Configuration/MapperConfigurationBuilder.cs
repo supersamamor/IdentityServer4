@@ -25,7 +25,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers.Configura
             TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
             TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto,
-            TUserClaimDto, TRoleClaimDto>()
+            TUserClaimDto, TRoleClaimDto, TApplicationsDto>()
             where TUserDto : UserDto<TKey>
             where TRoleDto : RoleDto<TKey>
             where TUser : IdentityUser<TKey>
@@ -46,11 +46,12 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers.Configura
             where TRoleClaimsDto : RoleClaimsDto<TRoleClaimDto, TKey>
             where TUserClaimDto : UserClaimDto<TKey>
             where TRoleClaimDto : RoleClaimDto<TKey>
+            where TApplicationsDto : ApplicationsDto
         {
             ProfileTypes.Add(typeof(IdentityMapperProfile<TUserDto, TRoleDto, TUser, TRole, TKey,
                 TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
                 TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-                TUserProviderDto, TUserProvidersDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>));
+                TUserProviderDto, TUserProvidersDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto, TApplicationsDto>));
 
             return this;
         }

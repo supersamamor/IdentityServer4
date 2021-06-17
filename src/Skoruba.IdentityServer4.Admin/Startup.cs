@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.Configuration.Database;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Models;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Shared.Configuration.Helpers;

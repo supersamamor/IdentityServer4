@@ -13,6 +13,7 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfaces;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.Dtos.Common;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Shared.ExceptionHandling;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Models;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.Interfaces;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
@@ -20,10 +21,10 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
     public class IdentityService<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole,
         TUserLogin, TRoleClaim, TUserToken,
         TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto, TApplications, TApplicationsDto> : IIdentityService<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole,
+        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto, TApplication, TApplicationsDto> : IIdentityService<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole,
         TUserLogin, TRoleClaim, TUserToken,
         TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
-        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto, TApplications, TApplicationsDto>
+        TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto, TApplication, TApplicationsDto>
         where TUserDto : UserDto<TKey>
         where TRoleDto : RoleDto<TKey>
         where TUser : IdentityUser<TKey>
@@ -496,14 +497,38 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             return HandleIdentityError(identityResult, IdentityServiceResources.RoleDeleteFailed().Description, IdentityServiceResources.IdentityErrorKey().Description, role);
         }
 
-        public virtual async Task<TRolesDto> GetApplicationsAsync(string search, int page = 1, int pageSize = 10)
+        public virtual async Task<TApplicationsDto> GetApplicationsAsync(string search, int page = 1, int pageSize = 10)
         {
-            //PagedList<TApplications> pagedList = await IdentityRepository.GetApplicationsAsync(search, page, pageSize);
-            //var applicationsDto = Mapper.Map<TApplicationsDto>(pagedList);
+            PagedList<IApplication> pagedList = await IdentityRepository.GetApplicationsAsync(search, page, pageSize);
+            var applicationsDto = Mapper.Map<TApplicationsDto>(pagedList);
+            await AuditEventLogger.LogEventAsync(new ApplicationsRequestedEvent<TApplicationsDto>(applicationsDto));
+            return applicationsDto;
+        }
+        public virtual async Task<ApplicationDto> GetApplicationAsync(int applicationId)
+        {          
+            var application = await IdentityRepository.GetApplicationAsync(applicationId);
+            if (application == null) throw new UserFriendlyErrorPageException(string.Format(IdentityServiceResources.ApplicationDoesNotExist().Description, applicationId), IdentityServiceResources.ApplicationDoesNotExist().Description);
 
-            //await AuditEventLogger.LogEventAsync(new RolesRequestedEvent<TApplicationsDto>(applicationsDto));
+            var applicationDto = Mapper.Map<ApplicationDto>(application);
 
-            return null;
+            await AuditEventLogger.LogEventAsync(new ApplicationRequestedEvent(applicationDto));
+
+            return applicationDto;
+        }
+
+        public virtual async Task<int> CreateApplicationAsync(ApplicationDto application)
+        {
+            var applicationEntity = Mapper.Map<Application>(application);
+            var applicationId = await IdentityRepository.CreateApplicationAsync(applicationEntity);         
+            await AuditEventLogger.LogEventAsync(new ApplicationAddedEvent(application));
+            return applicationId;
+        }
+        public virtual async Task<int> UpdateApplicationAsync(ApplicationDto application)
+        {
+            var applicationEntity = Mapper.Map<Application>(application);
+            await IdentityRepository.UpdateApplicationAsync(applicationEntity);
+            await AuditEventLogger.LogEventAsync(new ApplicationUpdatedEvent(application));
+            return application.Id;
         }
     }
 }
