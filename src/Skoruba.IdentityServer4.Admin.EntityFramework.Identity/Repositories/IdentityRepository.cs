@@ -434,6 +434,13 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             DbContext.Set<Application>().Update(application);
             await AutoSaveChangesAsync();
         }
+
+        public virtual async Task DeleteApplicationAsync(Application application)
+        {
+            DbContext.Set<Application>().Remove(application);
+            await AutoSaveChangesAsync();
+        }
+
         private async Task RemoveApplicationRelationsAsync(Application application)
         {
             //Remove old allowed scopes

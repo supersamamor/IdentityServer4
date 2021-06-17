@@ -106,5 +106,25 @@ namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
 
             return RedirectToAction(nameof(application), new { Id = applicationId });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ApplicationDelete(int id)
+        {
+            if (id == 0)
+            {
+                return View(new ApplicationDto());
+            }
+            var application = await _identityService.GetApplicationAsync(id);
+            return View(application);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ApplicationDelete(ApplicationDto application)
+        {
+            await _identityService.DeleteApplicationAsync(application);
+            SuccessNotification(_localizer["SuccessDeleteApplication"], _localizer["SuccessTitle"]);
+            return RedirectToAction(nameof(application));
+        }
     }
 }

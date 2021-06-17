@@ -15,11 +15,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Content Remove="Areas\AdminUI\Views\Application\RoleDelete.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
 
     <ItemGroup>
         <None Include="Areas\AdminUI\Views\Account\AccessDenied.cshtml" />
+        <None Include="Areas\AdminUI\Views\Application\RoleDelete.cshtml" />
         <None Include="Areas\AdminUI\Views\Configuration\ApiResource.cshtml" />
         <None Include="Areas\AdminUI\Views\Configuration\ApiResourceDelete.cshtml" />
         <None Include="Areas\AdminUI\Views\Configuration\ApiResourceProperties.cshtml" />

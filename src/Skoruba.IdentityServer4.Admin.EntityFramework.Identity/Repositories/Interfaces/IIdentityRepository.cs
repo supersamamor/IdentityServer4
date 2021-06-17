@@ -89,5 +89,6 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.In
         Task<IApplication> GetApplicationAsync(int applicationId);
         Task<int> CreateApplicationAsync(Application application);
         Task UpdateApplicationAsync(Application application);
+        Task DeleteApplicationAsync(Application application);
     }
 }

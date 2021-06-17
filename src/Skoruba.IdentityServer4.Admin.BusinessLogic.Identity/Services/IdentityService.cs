@@ -523,12 +523,20 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             await AuditEventLogger.LogEventAsync(new ApplicationAddedEvent(application));
             return applicationId;
         }
+
         public virtual async Task<int> UpdateApplicationAsync(ApplicationDto application)
         {
             var applicationEntity = Mapper.Map<Application>(application);
             await IdentityRepository.UpdateApplicationAsync(applicationEntity);
             await AuditEventLogger.LogEventAsync(new ApplicationUpdatedEvent(application));
             return application.Id;
+        }
+
+        public virtual async Task DeleteApplicationAsync(ApplicationDto application)
+        {
+            var applicationIdentity = Mapper.Map<Application>(application);
+            await IdentityRepository.DeleteApplicationAsync(applicationIdentity);
+            await AuditEventLogger.LogEventAsync(new ApplicationDeletedEvent(application));           
         }
     }
 }
