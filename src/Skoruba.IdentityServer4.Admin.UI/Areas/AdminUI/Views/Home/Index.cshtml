@@ -105,7 +105,18 @@
             <a asp-area="@CommonConsts.AdminUIArea" asp-controller="Identity" asp-action="Roles" class="btn btn-lg btn-block btn-primary">@Localizer["ButtonManage"]</a>
         </div>
     </div>
-
+    <!-- Application -->
+    <div class="card mb-4 box-shadow">
+        <div class="card-header">
+            <h4 class="my-0 font-weight-normal">@Localizer["ButtonApplications"]</h4>
+        </div>
+        <div class="card-body">
+            <h1 class="card-title">
+                <span class="oi oi-browser" title="Applications" aria-hidden="true"></span>
+            </h1>
+            <a asp-area="@CommonConsts.AdminUIArea" asp-controller="Application" asp-action="Index" class="btn btn-lg btn-block btn-outline-primary">@Localizer["ButtonManage"]</a>
+        </div>
+    </div>
     <!-- Audit Logging -->
     <div class="card mb-4 box-shadow">
         <div class="card-header">
@@ -115,8 +126,8 @@
             <h1 class="card-title">
                 <span class="oi oi-eye" title="Audit Logging" aria-hidden="true"></span>
             </h1>
-            <a asp-area="@CommonConsts.AdminUIArea" asp-controller="Log" asp-action="AuditLog" class="btn btn-lg btn-block btn-outline-primary">@Localizer["ButtonManage"]</a>
+            <a asp-area="@CommonConsts.AdminUIArea" asp-controller="Log" asp-action="AuditLog" class="btn btn-lg btn-block btn-primary">@Localizer["ButtonManage"]</a>
         </div>
-    </div>   
+    </div>
 </div>
 
