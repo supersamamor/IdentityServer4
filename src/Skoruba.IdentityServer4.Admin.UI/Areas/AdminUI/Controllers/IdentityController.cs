@@ -441,5 +441,50 @@ namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
 
             return View(user);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RolePermissions(TRoleClaimsDto claim)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(claim);
+            }
+
+            await _identityService.CreateRoleClaimsAsync(claim);
+            SuccessNotification(string.Format(_localizer["SuccessCreateRoleClaims"], claim.ClaimType, claim.ClaimValue), _localizer["SuccessTitle"]);
+
+            return RedirectToAction(nameof(RolePermissions), new { Id = claim.RoleId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> RolePermissions(TKey id, int? page)
+        {
+            if (EqualityComparer<TKey>.Default.Equals(id, default)) return NotFound();
+
+            var claims = await _identityService.GetRoleClaimsAsync(id.ToString(), page ?? 1);
+            claims.RoleId = id;
+
+            return View(claims);
+        }
+        [HttpGet]
+        public async Task<IActionResult> RolePermissionsDelete(TKey id, int claimId)
+        {
+            if (EqualityComparer<TKey>.Default.Equals(id, default) ||
+                EqualityComparer<int>.Default.Equals(claimId, default)) return NotFound();
+
+            var claim = await _identityService.GetRoleClaimAsync(id.ToString(), claimId);
+
+            return View(claim);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RolePermissionsDelete(TRoleClaimsDto claim)
+        {
+            await _identityService.DeleteRoleClaimAsync(claim);
+            SuccessNotification(_localizer["SuccessDeleteRoleClaims"], _localizer["SuccessTitle"]);
+
+            return RedirectToAction(nameof(RolePermissions), new { Id = claim.RoleId });
+        }
     }
 }
