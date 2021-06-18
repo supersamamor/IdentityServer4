@@ -255,7 +255,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
         {
             var id = ConvertKeyFromString(roleId);
             var pagedList = new PagedList<TRoleClaim>();
-            var claims = await DbContext.Set<TRoleClaim>().Where(x => x.RoleId.Equals(id))
+            var claims = await DbContext.Set<TRoleClaim>().Where(x => x.RoleId.Equals(id) && x.ClaimType != Constants.PermissionClaimType)
                 .PageBy(x => x.Id, page, pageSize)
                 .ToListAsync();
 
@@ -446,6 +446,21 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
         {
             return new SelectList(await DbContext.Set<Application>().ToListAsync(), "Id", "Name");
         }
+        public virtual async Task<PagedList<TRoleClaim>> GetRolePermissionsAsync(string roleId, int page = 1, int pageSize = 10)
+        {
+            var id = ConvertKeyFromString(roleId);
+            var pagedList = new PagedList<TRoleClaim>();
+            var claims = await DbContext.Set<TRoleClaim>().Where(x => x.RoleId.Equals(id) && x.ClaimType == Constants.PermissionClaimType)
+                .PageBy(x => x.Id, page, pageSize)
+                .ToListAsync();
+
+            pagedList.Data.AddRange(claims);
+            pagedList.TotalCount = await DbContext.Set<TRoleClaim>().Where(x => x.RoleId.Equals(id)).CountAsync();
+            pagedList.PageSize = pageSize;
+
+            return pagedList;
+        }
+
         private async Task RemoveApplicationRelationsAsync(Application application)
         {
             //Remove old allowed scopes

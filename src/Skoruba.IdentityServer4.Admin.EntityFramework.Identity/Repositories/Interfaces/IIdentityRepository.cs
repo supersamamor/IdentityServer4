@@ -92,5 +92,6 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.In
         Task UpdateApplicationAsync(Application application);
         Task DeleteApplicationAsync(Application application);
         Task<IEnumerable<SelectListItem>> GetApplicationsDropdown();
+        Task<PagedList<TRoleClaim>> GetRolePermissionsAsync(string roleId, int page = 1, int pageSize = 10);
     }
 }

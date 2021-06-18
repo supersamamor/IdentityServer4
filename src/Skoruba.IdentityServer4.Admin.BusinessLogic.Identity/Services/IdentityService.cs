@@ -555,5 +555,20 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
 
             return HandleIdentityError(identityResult, IdentityServiceResources.RoleClaimsCreateFailed().Description, IdentityServiceResources.IdentityErrorKey().Description, claimsDto);
         }
+        public virtual async Task<TRoleClaimsDto> GetRolePermissionsAsync(string roleId, int page = 1, int pageSize = 10)
+        {
+            var roleExists = await IdentityRepository.ExistsRoleAsync(roleId);
+            if (!roleExists) throw new UserFriendlyErrorPageException(string.Format(IdentityServiceResources.RoleDoesNotExist().Description, roleId), IdentityServiceResources.RoleDoesNotExist().Description);
+
+            var identityRoleClaims = await IdentityRepository.GetRolePermissionsAsync(roleId, page, pageSize);
+            var roleClaimDtos = Mapper.Map<TRoleClaimsDto>(identityRoleClaims);
+            var roleDto = await GetRoleAsync(roleId);
+            roleClaimDtos.RoleName = roleDto.Name;
+
+            await AuditEventLogger.LogEventAsync(new RoleClaimsRequestedEvent<TRoleClaimsDto>(roleClaimDtos));
+
+            return roleClaimDtos;
+        }
+
     }
 }
