@@ -3,8 +3,9 @@ namespace MvcClient.Constants
 {
     public class AuthorizationConsts
     {
-        public const string Module1Policy = "Module1Policy";
-        public const string Module2Policy = "Module2Policy";
-        public const string Module3Policy = "Module3Policy";
+        public const string Application1Module1View = "Module1View";
+        public const string Application1Module1Create = "Module1Create";
+        public const string Application1Module1Edit = "Module1Edit";
+        
     }
 }

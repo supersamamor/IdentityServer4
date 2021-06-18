@@ -68,15 +68,15 @@ namespace MvcClient
                     });
 
             services.AddAuthorization(options =>
-            {              
-                options.AddPolicy(AuthorizationConsts.Module1Policy,
-                    policy =>  policy.RequireAssertion(context => context.User.HasClaim(c =>((c.Type == "Permissions" && c.Value == "Module1")))));
+            {
+                options.AddPolicy(AuthorizationConsts.Application1Module1View,
+                    policy => policy.RequireAssertion(context => context.User.HasClaim(c => ((c.Type == "Permissions" && c.Value == "Application1.Module1.View")))));
 
-                options.AddPolicy(AuthorizationConsts.Module2Policy,
-                  policy => policy.RequireAssertion(context => context.User.HasClaim(c => ((c.Type == "Permissions" && c.Value == "Module2")))));
+                options.AddPolicy(AuthorizationConsts.Application1Module1Create,
+                  policy => policy.RequireAssertion(context => context.User.HasClaim(c => ((c.Type == "Permissions" && c.Value == "Application1.Module1.Create")))));
 
-                options.AddPolicy(AuthorizationConsts.Module3Policy,
-                  policy => policy.RequireAssertion(context => context.User.HasClaim(c => ((c.Type == "Permissions" && c.Value == "Module3")))));
+                options.AddPolicy(AuthorizationConsts.Application1Module1Edit,
+                  policy => policy.RequireAssertion(context => context.User.HasClaim(c => ((c.Type == "Permissions" && c.Value == "Application1.Module1.Edit")))));
             });
 
             services.ConfigureApplicationCookie(options =>

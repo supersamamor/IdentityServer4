@@ -40,18 +40,18 @@ namespace MvcClient.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        [Authorize(Policy = AuthorizationConsts.Module1Policy)]
-        public IActionResult Module1()
+        [Authorize(Policy = AuthorizationConsts.Application1Module1Create)]
+        public IActionResult Create()
         {
             return View();
         }
-        [Authorize(Policy = AuthorizationConsts.Module2Policy)]
-        public IActionResult Module2()
+        [Authorize(Policy = AuthorizationConsts.Application1Module1Edit)]
+        public IActionResult Edit()
         {
             return View();
         }
-        [Authorize(Policy = AuthorizationConsts.Module3Policy)]
-        public IActionResult Module3()
+        [Authorize(Policy = AuthorizationConsts.Application1Module1View)]
+        public IActionResult ViewTest()
         {
             return View();
         }
