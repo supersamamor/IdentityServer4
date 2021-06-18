@@ -30,6 +30,7 @@ using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.IdentityServer4.Admin.UnitTests.Mocks;
 using Skoruba.IdentityServer4.Admin.UI.Helpers;
 using Xunit;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Models;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 {

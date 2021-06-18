@@ -22,6 +22,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity
         public int PageSize { get; set; }
         public int ApplicationId { get; set; }
         public string Permission { get; set; }
+        public string Module { get; set; }
         List<IRoleClaimDto> IRoleClaimsDto.Claims => Claims.Cast<IRoleClaimDto>().ToList();
         public IEnumerable<SelectListItem> ApplicationList { get; set; }
     }

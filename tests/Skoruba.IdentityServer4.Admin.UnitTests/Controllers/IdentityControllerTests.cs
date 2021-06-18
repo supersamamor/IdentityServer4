@@ -30,6 +30,7 @@ using Skoruba.IdentityServer4.Admin.UI.Helpers;
 using Skoruba.IdentityServer4.Admin.UI.Helpers.Localization;
 using Xunit;
 using System.Security.Claims;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Models;
 
 namespace Skoruba.IdentityServer4.Admin.UnitTests.Controllers
 {

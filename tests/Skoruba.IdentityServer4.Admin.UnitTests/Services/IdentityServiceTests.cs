@@ -14,6 +14,7 @@ using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Mappers;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Resources;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfaces;
+using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Models;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.Interfaces;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
@@ -79,7 +80,7 @@ namespace Skoruba.IdentityServer4.Admin.UnitTests.Services
                         UserIdentityUserToken,
                         UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string>,
                         UserClaimsDto<UserClaimDto<string>, string>, UserProviderDto<string>, UserProvidersDto<UserProviderDto<string>, string>,
-                        RoleClaimsDto<RoleClaimDto<string>, string>, UserClaimDto<string>, RoleClaimDto<string>>>())
+                        RoleClaimsDto<RoleClaimDto<string>, string>, UserClaimDto<string>, RoleClaimDto<string>, ApplicationsDto>>())
                 .CreateMapper();
         }
 

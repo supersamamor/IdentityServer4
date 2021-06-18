@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 
 namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Identity
 {
     [DbContext(typeof(AdminIdentityDbContext))]
-    partial class AdminIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210618100453_AddRelationOnRoleClaimAndApplication")]
+    partial class AddRelationOnRoleClaimAndApplication
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,9 +154,6 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.SqlServer.Migrations.Ide
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Module")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Permission")
