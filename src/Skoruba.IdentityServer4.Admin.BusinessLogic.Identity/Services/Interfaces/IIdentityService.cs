@@ -75,5 +75,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfac
         Task<int> UpdateApplicationAsync(ApplicationDto application);
         Task DeleteApplicationAsync(ApplicationDto application);
         Task<IEnumerable<SelectListItem>> GetApplicationsDropdown();
+        Task<IdentityResult> CreateRolePermissionsAsync(TRoleClaimsDto claimsDto);
     }
 }

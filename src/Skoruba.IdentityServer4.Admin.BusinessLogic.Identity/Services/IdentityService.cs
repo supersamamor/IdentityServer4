@@ -543,5 +543,17 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
         {
             return await IdentityRepository.GetApplicationsDropdown();           
         }
+
+        public virtual async Task<IdentityResult> CreateRolePermissionsAsync(TRoleClaimsDto claimsDto)
+        {
+            var identityRoleClaim = Mapper.Map<TRoleClaim>(claimsDto);
+            var application = await IdentityRepository.GetApplicationAsync(claimsDto.ApplicationId);
+            identityRoleClaim.ClaimValue = $"{application.Name}.{claimsDto.Module}.{claimsDto.Permission}";
+            var identityResult = await IdentityRepository.CreateRoleClaimsAsync(identityRoleClaim);
+
+            await AuditEventLogger.LogEventAsync(new RoleClaimsSavedEvent<TRoleClaimsDto>(claimsDto));
+
+            return HandleIdentityError(identityResult, IdentityServiceResources.RoleClaimsCreateFailed().Description, IdentityServiceResources.IdentityErrorKey().Description, claimsDto);
+        }
     }
 }

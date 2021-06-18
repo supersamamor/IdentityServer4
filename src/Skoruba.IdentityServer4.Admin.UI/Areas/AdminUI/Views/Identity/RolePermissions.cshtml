@@ -27,27 +27,8 @@
             <div class="card mt-3">
                 <h5 class="card-header">@Localizer["PanelTitleNew"]</h5>
                 <div class="card-body">
-
-                    <!--Select with tags-->
-                    <div class="form-group row">
-                        <label asp-for="ClaimType" class="col-sm-3 col-form-label">
-                            @Localizer["Type"]
-                        </label>
-                        <div class="col-sm-9">
-                            <picker id="ClaimType" multiple-select="false" min-search-text="2"
-                                    selected-item="@Model.ClaimType" url="@Url.Action("SearchClaims", "Configuration")?claim"
-                                    search-input-placeholder="@Localizer["PickerSearchItemPlaceholder"].Value"
-                                    selected-items-title="@Localizer["PickerSelectedItemsTitle"].Value"
-                                    search-result-title="@Localizer["PickerSearchResultTitle"].Value"
-                                    suggested-items-title="@Localizer["PickerSuggestedItemsTitle"].Value"
-                                    no-item-selected-title="@Localizer["PickerNoItemSelectedTitle"].Value"
-                                    show-all-items-title="@Localizer["PickerShowAllItemsTitle"].Value"
-                                    item-already-selected-title="@Localizer["PickerItemAlreadySelectedTitle"].Value"
-                                    required="true" required-message="@Localizer["PickerRequiredMessage"].Value">
-                            </picker>
-                            <span asp-validation-for="ClaimType" class="text-danger"></span>
-                        </div>
-                    </div>
+                    <input type="hidden" required class="form-control" asp-for="ClaimType" value="@Skoruba.IdentityServer4.Admin.UI.Constants.PermissionClaimType">
+                    <input type="hidden" required class="form-control" asp-for="ClaimValue" value="@Skoruba.IdentityServer4.Admin.UI.Constants.PermissionClaimValueFiller">
                     <!--Select - text -->
                     <div class="form-group row">
                         <label asp-for="ApplicationId" class="col-sm-3 col-form-label">
@@ -78,18 +59,7 @@
                             <select asp-for="Permission" asp-items="@Skoruba.IdentityServer4.Admin.UI.Constants.Permissions" class="form-control single-select"></select>
                             <span asp-validation-for="Permission" class="text-danger"></span>
                         </div>
-                    </div>
-                    <!--Input - text -->
-                    <div class="form-group row">
-                        <label asp-for="ClaimValue" class="col-sm-3 col-form-label">
-                            @Localizer["Value"]
-                        </label>
-                        <div class="col-sm-9">
-                            <input type="text" required class="form-control" asp-for="ClaimValue">
-                            <span asp-validation-for="ClaimValue" class="text-danger"></span>
-                        </div>
-                    </div>
-
+                    </div>     
                     <!--Button-->
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">

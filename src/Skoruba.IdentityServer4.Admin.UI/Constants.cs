@@ -12,5 +12,8 @@ namespace Skoruba.IdentityServer4.Admin.UI
                 new SelectListItem { Value = "Edit", Text = "Edit" },
                 new SelectListItem { Value = "Delete", Text = "Delete" },
             };
+
+        public static string PermissionClaimType = "Permissions";
+        public static string PermissionClaimValueFiller = "ClaimValue";
     }
 }

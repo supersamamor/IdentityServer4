@@ -11,7 +11,7 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity.Int
         int PageSize { get; set; }
         int ApplicationId { get; set; }
         string Permission { get; set; }
-        string Module { get; set; }
+        string Module { get; set; }      
         IEnumerable<SelectListItem> ApplicationList { get; set; }
     }
 }

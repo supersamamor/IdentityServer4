@@ -451,7 +451,7 @@ namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
                 return View(claim);
             }
 
-            await _identityService.CreateRoleClaimsAsync(claim);
+            await _identityService.CreateRolePermissionsAsync(claim);
             SuccessNotification(string.Format(_localizer["SuccessCreateRoleClaims"], claim.ClaimType, claim.ClaimValue), _localizer["SuccessTitle"]);
 
             return RedirectToAction(nameof(RolePermissions), new { Id = claim.RoleId });
