@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Models;
 
@@ -90,5 +91,6 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories.In
         Task<int> CreateApplicationAsync(Application application);
         Task UpdateApplicationAsync(Application application);
         Task DeleteApplicationAsync(Application application);
+        Task<IEnumerable<SelectListItem>> GetApplicationsDropdown();
     }
 }

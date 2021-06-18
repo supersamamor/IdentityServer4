@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 
 namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfaces
@@ -73,5 +74,6 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services.Interfac
         Task<int> CreateApplicationAsync(ApplicationDto application);
         Task<int> UpdateApplicationAsync(ApplicationDto application);
         Task DeleteApplicationAsync(ApplicationDto application);
+        Task<IEnumerable<SelectListItem>> GetApplicationsDropdown();
     }
 }

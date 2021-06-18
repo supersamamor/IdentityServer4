@@ -48,7 +48,26 @@
                             <span asp-validation-for="ClaimType" class="text-danger"></span>
                         </div>
                     </div>
-
+                    <!--Select - text -->
+                    <div class="form-group row">
+                        <label asp-for="ApplicationId" class="col-sm-3 col-form-label">
+                            @Localizer["Application"]
+                        </label>
+                        <div class="col-sm-9">
+                            <select asp-for="ApplicationId" asp-items="@Model.ApplicationList" class="form-control single-select"></select>
+                            <span asp-validation-for="ApplicationId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <!--Select - text -->
+                    <div class="form-group row">
+                        <label asp-for="Permission" class="col-sm-3 col-form-label">
+                            @Localizer["Permission"]
+                        </label>
+                        <div class="col-sm-9">
+                            <select asp-for="Permission" asp-items="@Skoruba.IdentityServer4.Admin.UI.Constants.Permissions" class="form-control single-select"></select>
+                            <span asp-validation-for="Permission" class="text-danger"></span>
+                        </div>
+                    </div>
                     <!--Input - text -->
                     <div class="form-group row">
                         <label asp-for="ClaimValue" class="col-sm-3 col-form-label">

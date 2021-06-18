@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Skoruba.AuditLogging.Services;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Events.Identity;
@@ -537,6 +538,10 @@ namespace Skoruba.IdentityServer4.Admin.BusinessLogic.Identity.Services
             var applicationIdentity = Mapper.Map<Application>(application);
             await IdentityRepository.DeleteApplicationAsync(applicationIdentity);
             await AuditEventLogger.LogEventAsync(new ApplicationDeletedEvent(application));           
+        }
+        public virtual async Task<IEnumerable<SelectListItem>> GetApplicationsDropdown()
+        {
+            return await IdentityRepository.GetApplicationsDropdown();           
         }
     }
 }

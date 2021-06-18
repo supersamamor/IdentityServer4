@@ -464,7 +464,7 @@ namespace Skoruba.IdentityServer4.Admin.UI.Areas.AdminUI.Controllers
 
             var claims = await _identityService.GetRoleClaimsAsync(id.ToString(), page ?? 1);
             claims.RoleId = id;
-
+            claims.ApplicationList = await _identityService.GetApplicationsDropdown();
             return View(claims);
         }
         [HttpGet]

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Common;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Extensions.Enums;
@@ -402,7 +403,7 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             return await DbContext.SaveChangesAsync();
         }
         public virtual async Task<PagedList<IApplication>> GetApplicationsAsync(string search, int page = 1, int pageSize = 10)
-        {      
+        {
             var pagedList = new PagedList<IApplication>();
             var applications = DbContext.Set<Application>().WhereIf(!string.IsNullOrEmpty(search), t => t.Name.Contains(search));
 
@@ -416,16 +417,16 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             return pagedList;
         }
         public virtual async Task<IApplication> GetApplicationAsync(int applicationId)
-        {   
-            return await DbContext.Set<Application>().Where(l=>l.Id == applicationId).AsNoTracking().FirstOrDefaultAsync();     
+        {
+            return await DbContext.Set<Application>().Where(l => l.Id == applicationId).AsNoTracking().FirstOrDefaultAsync();
         }
         public virtual async Task<int> CreateApplicationAsync(Application application)
         {
             DbContext.Set<Application>().Add(application);
             await AutoSaveChangesAsync();
-            return application.Id;         
+            return application.Id;
         }
-     
+
         public virtual async Task UpdateApplicationAsync(Application application)
         {
             //Remove old relations
@@ -441,11 +442,15 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.Identity.Repositories
             await AutoSaveChangesAsync();
         }
 
+        public virtual async Task<IEnumerable<SelectListItem>> GetApplicationsDropdown()
+        {
+            return new SelectList(await DbContext.Set<Application>().ToListAsync(), "Id", "Name");
+        }
         private async Task RemoveApplicationRelationsAsync(Application application)
         {
             //Remove old allowed scopes
             //var clientScopes = await DbContext.ClientScopes.Where(x => x.Client.Id == client.Id).ToListAsync();
             //DbContext.ClientScopes.RemoveRange(clientScopes);
-        }  
+        }
     }
 }
